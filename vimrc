@@ -1,24 +1,30 @@
+let mapleader = " "
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+
+" allow project specific vimrc project file
+set exrc
+
 " alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
 " ========================= APPEREANCE ========================
-" Colorizer : highlight color codes and names 
+" Colorizer : highlight color codes and names
 Plugin 'chrisbra/color_highlight.git'
 " Solarized Colorscheme for Vim
-Plugin 'skwp/vim-colors-solarized'
+" Plugin 'skwp/vim-colors-solarized'
 " A light and configurable statusline/tabline for Vim
 Plugin 'itchyny/lightline.vim'
 " Retro groove color scheme for Vim.
-Plugin 'morhetz/gruvbox'
+" Plugin 'morhetz/gruvbox'
+Plugin 'https://github.com/scheakur/vim-scheakur.git'
 
 " ========================== GIT ==============================
 " Gist extension
@@ -38,9 +44,11 @@ Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-rake.git'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'Keithbsmiley/rspec.vim'
-Plugin 'skwp/vim-spec-finder'
 Plugin 'ck3g/vim-change-hash-syntax'
 Plugin 'tpope/vim-bundler'
+Plugin 'kana/vim-textobj-user'
+Plugin 'nelstrom/vim-textobj-rubyblock'
+Plugin 'thoughtbot/vim-rspec'
 
 " ========================= Languagues =======================
 Plugin 'sheerun/vim-polyglot'
@@ -59,6 +67,11 @@ Plugin 'tomtom/tcomment_vim.git'
 Plugin 'tpope/vim-endwise.git'
 Plugin 'tpope/vim-surround.git'
 Plugin 'Townk/vim-autoclose'
+Plugin 'easymotion/vim-easymotion'
+
+" ========================= Tmux ======= =====================
+Plugin 'christoomey/vim-tmux-runner'
+Plugin 'christoomey/vim-tmux-navigator'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -85,21 +98,16 @@ set number
 " Set fontsize
 set guifont=Inconsolata\ XL:h14,Inconsolata:h16,Monaco:h17
 
-"tell the term has 256 colors
-set t_Co=256
-
 " Show tab number (useful for Cmd-1, Cmd-2.. mapping)
 " For some reason this doesn't work as a regular set command,
 " (the numbers don't show up) so I made it a VimEnter event
 autocmd VimEnter * set guitablabel=%N:\ %t\ %M
 
-set lines=60
-set columns=190
-"
 " Color configurations
 syntax enable
 set background=dark
-colorscheme solarized
+" colorscheme solarized
+colorscheme scheakur
 
 " ================ Indentation ======================
 
@@ -150,12 +158,6 @@ set sidescroll=1
 
 " ================ Split map ========================
 
-" Navigate between splits with Ctrl + j, k, l, h
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
 " Shortcut to vertical splits and horizontal splits
 nnoremap <silent> vv <C-w>v
 nnoremap <silent> ss <C-w>s
@@ -164,18 +166,18 @@ nnoremap <silent> ss <C-w>s
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" mapping to Ctrl+N 
+" mapping to Ctrl+N
 map <C-n> :NERDTreeToggle<CR>
 
 " set a vertical line in vim on 80 column
-:set colorcolumn=80
+set colorcolumn=80
 
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 
 " tComment
 " Command-/ to toggle comments
-map <D-/> :TComment<CR>
-imap <D-/> <Esc>:TComment<CR>i
+map <C-/> :TComment<CR>
+imap <C-/> <Esc>:TComment<CR>i
 
 " Auto close html tag with Ctrl+space
 :imap <C-Space> <C-X><C-O>
@@ -186,3 +188,52 @@ set tags=./tags;
 " Set incremented and highlight in file searches '/'
 set incsearch
 set hlsearch
+
+" Disable swap file
+set noswapfile
+
+" Configuration to use ruby-blocks
+runtime macros/matchit.vim
+
+" Strip trailing whitespace
+function! <SID>StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+" disable unsafe commands in project specific vimrc files
+set secure
+
+" RSpec.vim mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+
+" VTR runner commands
+let g:VtrUseVtrMaps = 1
+let g:VtrPercentage = 30
+
+nnoremap <leader>va :VtrAttachToPane<cr>
+nmap <C-f> :VtrSendLinesToRunner<cr>
+vmap <C-f> <Esc>:VtrSendLinesToRunner<cr>
+nnoremap <leader>q :VtrSendCommandToRunner q<cr>
+
+" RSpec.vim to use iterm2
+let g:rspec_runner = "os_x_iterm2"
+let g:rspec_command = "call VtrSendCommand('RAILS_ENV=test rspec {spec}')"
+
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+
+" zoom a vim pane, <C-w>= to re-balance
+nnoremap <leader>- :wincmd _<cr>:wincmd \|<cr>
+nnoremap <leader>= :wincmd =<cr>
