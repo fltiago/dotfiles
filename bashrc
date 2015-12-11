@@ -15,3 +15,4 @@ then
   fi
 fi
 
+alias prettyjson='python -mjson.tool'
