@@ -224,7 +224,7 @@ let g:VtrPercentage = 30
 
 nnoremap <leader>va :VtrAttachToPane<cr>
 nmap <C-f> :VtrSendLinesToRunner<cr>
-vmap <C-f> <Esc>:VtrSendLinesToRunner<cr>
+vmap <C-g> :VtrSendLinesToRunner<cr>
 nnoremap <leader>q :VtrSendCommandToRunner q<cr>
 
 " RSpec.vim to use iterm2
