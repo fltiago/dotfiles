@@ -19,7 +19,7 @@ Plugin 'gmarik/Vundle.vim'
 " Colorizer : highlight color codes and names
 Plugin 'chrisbra/color_highlight.git'
 " Solarized Colorscheme for Vim
-" Plugin 'skwp/vim-colors-solarized'
+Plugin 'skwp/vim-colors-solarized'
 " A light and configurable statusline/tabline for Vim
 Plugin 'itchyny/lightline.vim'
 " Retro groove color scheme for Vim.
@@ -73,6 +73,12 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'christoomey/vim-tmux-runner'
 Plugin 'christoomey/vim-tmux-navigator'
 
+" ========================= Tools ============================
+Plugin 'vim-scripts/csv.vim'
+Plugin 'tpope/vim-speeddating'
+" Org-mode
+Plugin 'jceb/vim-orgmode'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -106,8 +112,14 @@ autocmd VimEnter * set guitablabel=%N:\ %t\ %M
 " Color configurations
 syntax enable
 set background=dark
-" colorscheme solarized
-colorscheme scheakur
+colorscheme solarized
+" colorscheme scheakur
+
+" show the current line
+set cursorline
+
+" show last command in bottom bar
+set showcmd
 
 " ================ Indentation ======================
 
@@ -156,6 +168,9 @@ set scrolloff=8         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 
+" visual autocomplote for command menu
+set wildmenu
+
 " ================ Split map ========================
 
 " Shortcut to vertical splits and horizontal splits
@@ -189,6 +204,8 @@ set tags=./tags;
 set incsearch
 set hlsearch
 
+nnoremap <leader>nh :nohlsearch<CR>
+
 " Disable swap file
 set noswapfile
 
@@ -213,10 +230,10 @@ autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
 set secure
 
 " RSpec.vim mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+" map <Leader>c :call RunCurrentSpecFile()<CR>
+" map <Leader>n :call RunNearestSpec()<CR>
+" map <Leader>l :call RunLastSpec()<CR>
+" map <Leader>a :call RunAllSpecs()<CR>
 
 " VTR runner commands
 let g:VtrUseVtrMaps = 1
@@ -240,3 +257,18 @@ nnoremap <leader>= :wincmd =<cr>
 
 " fix backspace problem in vim
 set backspace=2
+
+" fix the clipboard problem
+set clipboard=unnamed
+
+
+" allows cursor change in tmux mode
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+set nohlsearch
