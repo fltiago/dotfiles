@@ -1,3 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =1
-let g:netrw_dirhist_1='/Users/fltiago'
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/fltiago/dev/work/inloco/bssid-api-lambda'
+let g:netrw_dirhist_2='/Users/fltiago/dev/work/inloco/atlas'
+let g:netrw_dirhist_3='/Users/fltiago/dev/work/inloco/ads'
+let g:netrw_dirhist_4='/Users/fltiago/dev/work/inloco/user-location-etl'
+let g:netrw_dirhist_5='/Users/fltiago/dev/work/inloco/atlas'
+let g:netrw_dirhist_6='/Users/fltiago/dev/work/inloco/processo-seletivo/jp/restApiAdRecommendation'
+let g:netrw_dirhist_7='/Users/fltiago/dev/work/inloco/atlas'
