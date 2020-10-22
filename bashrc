@@ -1,9 +1,3 @@
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-export PATH="$PATH:/usr/local/sbin"
-
 export EDITOR=vim
 
 if [ -f ~/.git-completion.bash ]; then
@@ -21,4 +15,3 @@ then
 fi
 
 alias prettyjson='python -mjson.tool'
-
