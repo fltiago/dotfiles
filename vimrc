@@ -26,18 +26,12 @@ Plugin 'itchyny/lightline.vim'
 " Plugin 'morhetz/gruvbox'
 Plugin 'https://github.com/scheakur/vim-scheakur.git'
 
-" ========================== GIT ==============================
-" Gist extension
-Plugin 'mattn/webapi-vim'
-Plugin 'mattn/gist-vim'
-Plugin 'tpope/vim-fugitive'
-
 " ========================== Project ==========================
-Plugin 'scrooloose/nerdtree'
+Plugin 'preservim/nerdtree'
 
 " ========================== Seacher ==========================
-Plugin 'rking/ag.vim'
 Plugin 'kien/ctrlp.vim'
+Plugin 'mileszs/ack.vim'
 
 " ========================== Ruby and Rails ===================
 Plugin 'tpope/vim-rails'
@@ -72,12 +66,6 @@ Plugin 'easymotion/vim-easymotion'
 " ========================= Tmux ======= =====================
 Plugin 'christoomey/vim-tmux-runner'
 Plugin 'christoomey/vim-tmux-navigator'
-
-" ========================= Tools ============================
-Plugin 'vim-scripts/csv.vim'
-Plugin 'tpope/vim-speeddating'
-" Org-mode
-Plugin 'jceb/vim-orgmode'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -260,7 +248,6 @@ set backspace=2
 
 " fix the clipboard problem
 set clipboard=unnamed
-
 
 " allows cursor change in tmux mode
 if exists('$TMUX')
