@@ -1,9 +1,5 @@
 export EDITOR=vim
 
-if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
-fi
-
 if [ "$TERM" != 'dumb' ] && [ -n "$BASH" ] && [ -n "$PS1" ]
 then
   if [ `/usr/bin/whoami` = 'root' ]
